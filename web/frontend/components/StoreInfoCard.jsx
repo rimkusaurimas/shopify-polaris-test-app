@@ -1,22 +1,9 @@
-import { useState } from "react";
 import { Text, AlphaCard, Spinner, VerticalStack } from "@shopify/polaris";
 import { Toast } from "@shopify/app-bridge-react";
-import { useAppQuery } from "../hooks";
+import useStoreData from "../hooks/useStoreData.js";
 
 export function StoreInfoCard() {
-  const [isError, setIsError] = useState(false);
-
-  const { data, isLoading: isLoadingStoreData } = useAppQuery({
-    url: "/api/store/config",
-    reactQueryOptions: {
-      onError: (error) => {
-        setIsError(true);
-        console.error(error);
-      },
-    },
-  });
-
-  const storeData = data?.data?.[0];
+  const { storeData, isLoadingStoreData, isError, setIsError } = useStoreData();
 
   const toastMarkup = isError ? (
     <Toast
